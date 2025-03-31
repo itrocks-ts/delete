@@ -8,12 +8,12 @@ import { tr }         from '@itrocks/translate'
 
 @Need('object')
 @Route('/delete')
-export class Delete extends Action
+export class Delete<T extends object = object> extends Action<T>
 {
 
-	async html(request: Request)
+	async html(request: Request<T>)
 	{
-		const confirm   = new Confirm()
+		const confirm   = new Confirm<T>()
 		const confirmed = confirm.confirmed(request)
 		if (!confirmed) {
 			return confirm.html(request, tr('Do you confirm deletion') + tr('?') + '\n' + tr('All data will be lost') + '.')
@@ -27,7 +27,7 @@ export class Delete extends Action
 		return this.htmlTemplateResponse({ objects, type: request.type }, request, __dirname + '/delete.html')
 	}
 
-	async json(request: Request)
+	async json(request: Request<T>)
 	{
 		const objects = await request.getObjects()
 		for (const object of objects) {
