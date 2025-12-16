@@ -11,7 +11,7 @@ import { tr }         from '@itrocks/translate'
 export class Delete<T extends object = object> extends Action<T>
 {
 
-	async html(request: Request<T>)
+	async html(request: Request<T>, ...objects: T[])
 	{
 		const confirm   = new Confirm<T>()
 		const confirmed = confirm.confirmed(request)
@@ -20,18 +20,22 @@ export class Delete<T extends object = object> extends Action<T>
 		}
 		request = confirmed
 
-		const objects = await request.getObjects()
+		if (!objects.length) objects = await request.getObjects()
 		for (const object of objects) {
-			await dataSource().delete(object)
+			if (dataSource().isObjectConnected(object)) {
+				await dataSource().delete(object)
+			}
 		}
 		return this.htmlTemplateResponse({ objects, type: request.type }, request, __dirname + '/delete.html')
 	}
 
-	async json(request: Request<T>)
+	async json(request: Request<T>, ...objects: T[])
 	{
-		const objects = await request.getObjects()
+		if (!objects.length) objects = await request.getObjects()
 		for (const object of objects) {
-			await dataSource().delete(object)
+			if (dataSource().isObjectConnected(object)) {
+				await dataSource().delete(object)
+			}
 		}
 		return this.jsonResponse(objects)
 	}
