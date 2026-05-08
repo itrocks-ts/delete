@@ -11,6 +11,7 @@
 	},
 	"description": "Deletion action handling the button, user confirmation, data source deletion, and visual feedback",
 	"devDependencies": {
+		"@types/node": "^24.10",
 		"sass": "^1.95",
 		"typescript": "^6.0"
 	},
@@ -53,5 +54,5 @@
 		"build": "tsc && cp src/*.html cjs/ && npm run build:css",
 		"build:css": "sass --no-source-map src:css && cp src/*.svg css/"
 	},
-	"version": "0.1.1"
+	"version": "0.1.2"
 }
