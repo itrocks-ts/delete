@@ -13,7 +13,7 @@
 	"devDependencies": {
 		"@types/node": "^24.10",
 		"sass": "^1.95",
-		"typescript": "^6.0"
+		"typescript": "^7.0"
 	},
 	"engines": {
 		"node": ">=24"
@@ -54,5 +54,5 @@
 		"build": "tsc && cp src/*.html cjs/ && npm run build:css",
 		"build:css": "sass --no-source-map src:css && cp src/*.svg css/"
 	},
-	"version": "0.1.2"
+	"version": "0.1.3"
 }
