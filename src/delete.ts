@@ -16,6 +16,7 @@ export class Delete<T extends object = object> extends Action<T>
 		const confirm   = new Confirm<T>()
 		const confirmed = confirm.confirmed(request)
 		if (!confirmed) {
+			await request.resolveSelection()
 			return confirm.html(request, tr('Do you confirm deletion') + tr('?') + '\n' + tr('All data will be lost') + '.')
 		}
 		request = confirmed
@@ -31,6 +32,7 @@ export class Delete<T extends object = object> extends Action<T>
 
 	async json(request: Request<T>, ...objects: T[])
 	{
+		await request.resolveSelection()
 		if (!objects.length) objects = await request.getObjects()
 		for (const object of objects) {
 			if (dataSource().isObjectConnected(object)) {
